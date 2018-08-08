@@ -1,0 +1,31 @@
+package me.seriouszyx.db;
+
+
+import me.seriouszyx.bean.Emp;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class DBUtil {
+    /** 创建虚拟数据库 */
+    public static Map<String, Emp> map = new HashMap<String, Emp>();
+    static {
+        map.put("101", new Emp("101", "AA" , "123456", "AA@gmail.com"));
+        map.put("102", new Emp("102", "BB" , "123456", "BB@gmail.com"));
+        map.put("103", new Emp("103", "CC" , "123456", "CC@gmail.com"));
+        map.put("104", new Emp("104", "DD" , "123456", "DD@gmail.com"));
+    }
+
+    /** 判断用户名和密码是否正确 */
+    public static boolean selectEmpByAccountAndPassword (Emp emp) {
+        boolean flag = false;
+        for (String key : map.keySet()) {
+            Emp e = map.get(key);
+            if (emp.getAccount().equals(e.getAccount()) && emp.getPassword().equals(e.getPassword())) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+}
