@@ -14,6 +14,14 @@
                 <a href="./login.jsp">登录</a> <a href="./regist.jsp">注册</a>
             </h1>
         </div>
+
+        <%
+            String msg = "";
+            if (request.getAttribute("msg") != null) {
+                msg = (String) request.getAttribute("msg");
+            }
+        %>
+        <h3><font color="red"><%=msg %></font></h3>
         <form action="/RegistServlet" method="post" enctype="multipart/form-data">
             <table>
                 <tr>

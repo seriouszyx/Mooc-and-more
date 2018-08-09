@@ -1,5 +1,6 @@
+<%@ page import="me.seriouszyx.utils.CookieUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,25 @@
 
         <%
             String username = "";
+            // 获得从客户端携带的所有 cookie
+            Cookie[] cookies = request.getCookies();
+            Cookie cookie = CookieUtils.findCookie(cookies, "username");
+            if (cookie != null) {
+                username = cookie.getValue();
+            }
+
             if (session.getAttribute("username") != null) {
                 username = (String) session.getAttribute("username");
             }
-        %>
 
-        <form action="" method="post" enctype="multipart/form-data">
+            String msg = "";
+            if (request.getAttribute("msg") != null) {
+                msg = (String) request.getAttribute("msg");
+            }
+
+        %>
+        <h3><font color="red"><%=msg %></font></h3>
+        <form action="/LoginServlet" method="post">
             <table>
                 <tr>
                     <td class="td1">用户名</td>

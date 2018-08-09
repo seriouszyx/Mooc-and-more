@@ -36,7 +36,6 @@ public class RegistServlet extends HttpServlet {
          *      3. 解析request请求，返回List集合，集合中存放的是FileItem对象
          *      4. 遍历集合，获得每个FileItem，判断表单项还是文件上传项
          **/
-
         try {
             Map<String, String> map = new HashMap<>();
             // 1. 创建一个磁盘项工厂对象
@@ -66,22 +65,35 @@ public class RegistServlet extends HttpServlet {
                     // 文件上传项
                     // 获得文件上传名称
                     String fileName = fileItem.getName();
-                    // 通过工具类获得唯一文件名
-                    String uuidFileName = UpdateUtils.getUUIDFileName(fileName);
-                    // 获得文件上传数据
-                    InputStream is = fileItem.getInputStream();
-                    // 获得文上传路径
-                    String path = this.getServletContext().getRealPath("/upload");
-                    // 将输入流对接到输出流
-                    url = path + "\\" + uuidFileName;
-                    OutputStream os = new FileOutputStream(url);
-                    int len = 0;
-                    byte[] b = new byte[1024];
-                    while ((len = is.read(b)) != -1) {
-                        os.write(b, 0, len);
+
+                    if (fileName != null && !"".equals(fileName)) {
+                        // 通过工具类获得唯一文件名
+                        String uuidFileName = UpdateUtils.getUUIDFileName(fileName);
+                        // 获得文件上传数据
+                        InputStream is = fileItem.getInputStream();
+                        // 获得文上传路径
+                        String path = this.getServletContext().getRealPath("/upload");
+                        // 将输入流对接到输出流
+                        url = path + "\\" + uuidFileName;
+                        OutputStream os = new FileOutputStream(url);
+                        int len = 0;
+                        byte[] b = new byte[1024];
+                        while ((len = is.read(b)) != -1) {
+                            os.write(b, 0, len);
+                        }
+                        is.close();
+                        os.close();
                     }
-                    is.close();
-                    os.close();
+                }
+            }
+
+            List<User> userList = (List<User>) this.getServletContext().getAttribute("list");
+            // 校验用户名
+            for (User u : userList) {
+                if (u.getUsername().equals(map.get("username"))) {
+                    request.setAttribute("msg", "用户名已经存在");
+                    request.getRequestDispatcher("/regist.jsp").forward(request, response);
+                    return ;
                 }
             }
             // 封装数据到User当中
@@ -93,7 +105,7 @@ public class RegistServlet extends HttpServlet {
             user.setHobby(map.get("hobby"));
             user.setPath(url);
 
-            List<User> userList = (List<User>) this.getServletContext().getAttribute("list");
+
             userList.add(user);
             this.getServletContext().setAttribute("list", userList);
             // 注册成功，登陆跳转页面

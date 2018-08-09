@@ -22,7 +22,7 @@
                 <div class="content">
                     <table align="center">
                         <tr>
-                            <td align="center"><img width="250px" height="250px" src="/upload/<%=fileName %>" /></td>
+                            <td align="center"><img width="300px" height="300px" src="/upload/<%=fileName %>" /></td>
                         </tr>
                         <tr>
                             <td align="center">欢迎<%=user.getNickname() %>,登录成功！</td>
