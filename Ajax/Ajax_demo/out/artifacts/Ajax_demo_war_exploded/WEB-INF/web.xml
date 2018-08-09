@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         metadata-complete="true"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>me.seriouszyx.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ListCourseServlet</servlet-name>
+        <servlet-class>me.seriouszyx.servlet.ListCouseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListCourseServlet</servlet-name>
+        <url-pattern>/ListCourseServlet</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
