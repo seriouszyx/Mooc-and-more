@@ -358,6 +358,27 @@ public class LoginServlet extends HttpServlet {
     }
 ```
 
+在 jsp 页面我们要在所有 cookie 中找到我们需要的 cookie，这里设计一个工具类，用于指定 cookie 的查找。
+
+```java
+	/** Cookie查找的工具类 */
+	public class CookieUtils {
+		public static Cookie findCookie(Cookie[] cookies, String name) {
+			if (cookies == null) {
+				// 说明客户端没有携带 cookie
+				return null;
+			} else {
+				for (Cookie cookie : cookies) {
+					if (name.equals(cookie.getName())) {
+						return cookie;
+					}
+				}
+				return null;
+			}
+		}
+	}
+```
+
 在 login.jsp 文件中，先判断是否保存了 cookie，如果保存，将 cookie 的值回显在用户名的输入框中。
 
 ```jsp
