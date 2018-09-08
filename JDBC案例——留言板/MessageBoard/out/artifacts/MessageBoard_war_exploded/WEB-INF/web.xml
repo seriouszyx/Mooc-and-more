@@ -17,6 +17,86 @@
         <url-pattern>/message/list.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>me.seriouszyx.jdbc.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/main.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LoginPromptServlet</servlet-name>
+        <servlet-class>me.seriouszyx.jdbc.servlet.LoginPromptServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginPromptServlet</servlet-name>
+        <url-pattern>/login.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VerificationCodeImageServlet</servlet-name>
+        <servlet-class>me.seriouszyx.jdbc.servlet.VerificationCodeImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerificationCodeImageServlet</servlet-name>
+        <url-pattern>/verificationCode.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>me.seriouszyx.jdbc.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/userInfo.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/editUserPrompt.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/editUser.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>MessageServlet</servlet-name>
+        <servlet-class>me.seriouszyx.jdbc.servlet.MessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MessageServlet</servlet-name>
+        <url-pattern>/addMessagePrompt.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessageServlet</servlet-name>
+        <url-pattern>/addMessage.do</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>me.seriouszyx.jdbc.filter.UserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CharsetEncodingFilter</filter-name>
+        <filter-class>me.seriouszyx.jdbc.filter.CharsetEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharsetEncodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/error/404.jsp</location>

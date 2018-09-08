@@ -28,6 +28,13 @@ public class Message {
         this.createTime = createTime;
     }
 
+    public Message(long userId, String username, String title, String content) {
+        this.userId = userId;
+        this.username = username;
+        this.title = title;
+        this.content = content;
+    }
+
     public long getId() {
         return id;
     }

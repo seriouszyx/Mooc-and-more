@@ -3,10 +3,7 @@ package me.seriouszyx.jdbc.dao;
 import me.seriouszyx.jdbc.bean.Message;
 import me.seriouszyx.jdbc.common.ConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,5 +73,35 @@ public class MessageDAO {
         }
 
         return 0;
+    }
+
+    /**
+     * @Author Yixiang Zhao
+     * @Description 保存留言信息
+     * @Date 15:41 2018/9/8
+     * @Param [message]
+     * @return boolean
+     **/
+    public boolean save(Message message) {
+        Connection conn = ConnectionUtil.getConnection();
+        String sql = "insert into message (user_id, username, title, content, create_time) values(?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, message.getUserId());
+            pstmt.setString(2, message.getUsername());
+            pstmt.setString(3, message.getTitle());
+            pstmt.setString(4, message.getContent());
+            pstmt.setTimestamp(5, new Timestamp(message.getCreateTime().getTime()));
+            pstmt.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("保存留言信息失败....");
+            return false;
+        } finally {
+            ConnectionUtil.release(null, pstmt, conn);
+        }
+
+        return true;
     }
 }
