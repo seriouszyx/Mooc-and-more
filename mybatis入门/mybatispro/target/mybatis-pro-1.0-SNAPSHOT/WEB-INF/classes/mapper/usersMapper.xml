@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    mapper 用于定义一个映射配置文件的根节点
+    namespace 属性用于配置命名空间，主要进行session级别的缓存管理
+    命名空间默认情况下，使用我们当前操作的实体类的全路径
+-->
+<mapper namespace="me.seriouszyx.mybatis.Users">
+    <select id="findUsers" resultType="me.seriouszyx.mybatis.Users">
+        select * from users
+        <if test="id != null">
+            where id = #{id}
+        </if>
+    </select>
+
+    <!--<select id="findById" resultType="me.seriouszyx.mybatis.Users">-->
+    <!--select * from users where id = #{id}-->
+    <!--</select>-->
+
+    <sql id="user_fields">
+        username, userpass, nickname, age, gender, phone, email, createTime, updateTime, lastLogin, userStatus, remark
+    </sql>
+    
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
+        insert into users(<include refid="user_fields"></include>)
+        values (#{username}, #{userpass}, #{nickname}, #{age}, #{gender}, #{phone}, #{email}, #{createTime}, #{updateTime}, #{lastLogin}, #{userStatus}, #{remark})
+    </insert>
+
+    <update id="updateUser">
+        update users
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="userpass != null">userpass = #{userpass},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="lastLogin != null">lastlogin = #{lastLogin},</if>
+            <if test="userStatus != null">userStatus = #{userStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delUser">
+        delete from users where id = #{id}
+    </delete>
+    
+</mapper>
