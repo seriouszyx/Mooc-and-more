@@ -21,7 +21,7 @@
     <mvc:annotation-driven/>
     <!-- Servlet-Mapping 映射路径:"/" -->
     <!-- 2:静态资源默认servlet配置
-       1:加入对镜头资源的处理
+       1:加入对静态资源的处理
        2:允许使用/做映射
        -->
     <mvc:default-servlet-handler/>
