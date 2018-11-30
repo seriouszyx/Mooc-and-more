@@ -2,7 +2,7 @@ package org.seckill.entity;
 
 import java.util.Date;
 
-public class Seckill  {
+public class Seckill {
 
     private long seckillId;
 

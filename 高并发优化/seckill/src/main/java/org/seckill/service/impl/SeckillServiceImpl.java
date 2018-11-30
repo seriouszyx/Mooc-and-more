@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
+import org.seckill.dao.cache.RedisDao;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Seckill;
@@ -33,6 +34,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SuccessKilledDao successKilledDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     // md5 盐值字符串，用于混淆 MD5
     private final String slat = "fjklds;jf#$%$fjkls&*^f$";
 
@@ -45,17 +49,20 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long sekillId) {
-        // 优化点：缓存优化
-        /**
-         * get from cahche
-         * if null
-         *      get db
-         * else
-         *      put cache
-         * locgoin
-         */
+        // 优化点：缓存优化，一致性：建立在超时的基础上
+        // 1:访问 redis
+        Seckill seckill = redisDao.getSeckill(sekillId);
+        if (seckill == null) {
+            // 2:访问数据库
+            seckill = seckillDao.queryById(sekillId);
+            if (seckill == null) {
+                return new Exposer(false, sekillId);
+            } else {
+                // 3:放入 redis
+                redisDao.putSeckill(seckill);
+            }
+        }
 
-        Seckill seckill = seckillDao.queryById(sekillId);
         if (seckill == null) {
             return new Exposer(false, sekillId);
         }
