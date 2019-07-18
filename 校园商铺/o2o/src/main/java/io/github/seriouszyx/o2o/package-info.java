@@ -1,1 +1,0 @@
-package io.github.seriouszyx.o2o;
